@@ -1,29 +1,26 @@
-// DEPENDENCIES
 require("dotenv").config();
+
 const express = require("express");
 const app = express();
+const mongoose = require("mongoose");
 const cors = require("cors");
 
-// PORT AND MONGOOSE CONNECTION
 const PORT = process.env.PORT;
-const mongoose = require("mongoose");
-mongoose.connect(
-  process.env.MONGO_URI,
-  { useNewUrlParser: true, useUnifiedTopology: true },
-  () => {
-    console.log("Connected to mongodb:", process.env.MONGO_URI);
-  }
-);
 
-// MIDDLEWARE
-app.use(cors()); // prevents cors error
-app.use(express.json()); // allows server to parse Json
-app.use(express.urlencoded({ extended: true }));
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true });
+const db = mongoose.connection;
+db.on("error", (error) => console.error(error));
+db.once("open", () => console.log("Connected to database"));
 
-// ROUTES
-const usersController = require("./controllers/User.js");
-app.use("/users", usersController);
+app.use(express.json());
+app.use(cors());
+
+const usersRouter = require("./routes/user");
+app.use("/users", usersRouter);
+
+const workoutsRouter = require("./routes/workout");
+app.use("/workouts", workoutsRouter);
 
 app.listen(PORT, () => {
-    console.log("Tracking fitness at:", PORT);
+    console.log("Listening on", PORT);
 });
