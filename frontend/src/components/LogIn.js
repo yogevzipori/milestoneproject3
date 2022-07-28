@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 
 export default function LoginForm() {
   return (
+    <div>
     <Form style={{ width: '35vw' ,margin: '10 auto', marginLeft:'300'}}>
       <Form.Group className="mb-3 " controlId="formBasicEmail">
         <Form.Label>Email address</Form.Label>
@@ -20,5 +21,7 @@ export default function LoginForm() {
         Submit
       </Button>
     </Form>
+    </div>
+
   );
 }
