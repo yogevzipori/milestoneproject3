@@ -15,12 +15,14 @@ import {
   useNavigate,
   useLocation,
 } from "react-router-dom";
+
 import Login from "./components/LogIn"
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Router>
     <Routes>
-      <Route path='/login' element={<Login/>}></Route>
+      <Route path='/login' element={<Login/>}/>
     </Routes>
   </Router>
 );
