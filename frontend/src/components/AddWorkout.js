@@ -47,5 +47,5 @@ export default function AddWorkout() {
         </form>
       </div>
     </div>
-  )
-}
+  );
+};

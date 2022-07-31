@@ -1,26 +1,50 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
+
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 export default function EditWorkout() {
 
-  let { workoutId } = useParams();
-  const [FoundWorkout, setFoundWorkout] = useState(null);
-  const [WorkoutName, setWorkoutName] = useState("");
-  const [WorkoutNotes, setWorkoutNotes] = useState("");
-  const [userAssigned, setuserAssigned] = useState("");
-  const [Users, setUsers] = useState("");
+  const navigate = useNavigate()
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    console.log(JSON.stringify(workout))
+    let res = await fetch(`http://localhost:5001/workouts/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(workout)
+    });
+    navigate("/")
+  };
+
+  let { id } = useParams();
+
+  const [foundWorkout, setFoundWorkout] = useState(null);
+  const [workoutName, setWorkoutName] = useState("");
+  const [workoutNotes, setWorkoutNotes] = useState("");
+  const [userAssigned, setUserAssigned] = useState("");
+  const [users, setUsers] = useState("");
+
+  const [workout, setWorkout] = useState({
+    name: "",
+    description: ""
+  })
 
   // fetch for the workout that was clicked
   useEffect(() => {
-    fetch(`http://localhost5001/workouts/${workoutId}`)
+    fetch(`http://localhost:5001/workouts/${id}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setFoundWorkout(data);
         setWorkoutName(data.name);
+        setWorkout({
+          name: data.name,
+          description: ""
+        });
         setWorkoutNotes(data.Notes);
       });
   }, []);
@@ -35,25 +59,12 @@ export default function EditWorkout() {
       });
   }, []);
 
-  let handleSubmit = (e) => {
-    e.preventDefault();
-    fetch("http://localhost:5001/workouts" + workoutId, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: WorkoutName,
-        details: WorkoutNotes,
-        // user: userAssigned,
-      }),
-    });
-  };
-
   //   this prevents our component from trying to render the below before the data comes in
-  if (FoundWorkout === null || Users === null) {
+  if (foundWorkout === null || users === null) {
     return <p>Loading Stuff!</p>;
   }
 
-  console.log(FoundWorkout.user)
+  console.log(foundWorkout.user)
 
   return (
     <div id="editworkout">
@@ -63,19 +74,19 @@ export default function EditWorkout() {
           <Form.Label>Workout Type</Form.Label>
           <Form.Control
             type="text"
-            defaultValue={WorkoutName}
-            onChange={(e) => setWorkoutName(e.target.value)}
+            defaultValue={workoutName}
+            onChange={e => setWorkout({ ...workout, name: e.target.value})}
           />
-<Form.Group className="mb-3">
+        <Form.Group className="mb-3">
           <Form.Label>Notes</Form.Label>
           <Form.Control
             as="textarea"
             type="text"
-            defaultValue={WorkoutNotes}
-            onChange={(e) => setWorkoutNotes(e.target.value)}
+            defaultValue={workoutNotes}
+            onChange={e => setWorkout({ ...workout, description: e.target.value})}
           />
         </Form.Group>
-        {/* causing  with loading edit page */}
+        {/* causing error with loading edit page */}
         {/* <Form.Group className="mb-3">
           <Form.Label>User Assigned</Form.Label>
           <Form.Select
