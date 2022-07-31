@@ -42,7 +42,7 @@ router.patch("/:id", getWorkout, async (req, res) => {
         const updatedWorkout = await res.workout.save();
         res.json(updatedWorkout);
     } catch (err) {
-res.status(400).json({ message: err.message});
+        res.status(400).json({ message: err.message});
     };
 });
 

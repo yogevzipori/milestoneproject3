@@ -14,12 +14,12 @@ export default function Signup() {
     
     async function handleSubmit(e) {
         e.preventDefault();
-        await fetch("http://localhost:3000/users/", {
+        await fetch("http://localhost:5000/users/", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(user)
         });
-        navigate("/login");
+        navigate("/");
     };
 
     return (
@@ -61,7 +61,7 @@ export default function Signup() {
 
                     <button type="submit">Submit</button>
                 </form>
-                <button onClick={() => navigate("/login")}>Back to login</button>
+                <button onClick={() => navigate("/")}>Back to login</button>
             </div>
         </div>
     );

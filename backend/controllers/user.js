@@ -1,19 +1,18 @@
 const router = require("express").Router();
 const User = require("../models/user");
+const bcrypt = require("bcrypt");
 
 // CREATE User
 router.post("/", async (req, res) => {
-    const user = new User({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        password: req.body.password
-    });
     try {
-        const newUser = await user.save();
-        res.status(201).json(newUser);
+        let { password, ...rest } = req.body;
+        const user = await User.create({
+            ...rest,
+            passwordDigest: await bcrypt.hash(password, 10)
+        });
+        res.json(user);
     } catch (err) {
-        res.status(400).json({ message: err.message });
+        res.status(400).json({ message: err.message});
     };
 });
 
@@ -50,7 +49,7 @@ router.patch("/:id", getUser, async (req, res) => {
         const updatedUser = await res.user.save();
         res.json(updatedUser);
     } catch (err) {
-res.status(400).json({ message: err.message});
+        res.status(400).json({ message: err.message});
     };
 });
 
