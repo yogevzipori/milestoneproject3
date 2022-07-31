@@ -15,10 +15,10 @@ db.once("open", () => console.log("Connected to database"));
 app.use(express.json());
 app.use(cors());
 
-const usersRouter = require("./routes/user");
+const usersRouter = require("./controllers/user");
 app.use("/users", usersRouter);
 
-const workoutsRouter = require("./routes/workout");
+const workoutsRouter = require("./controllers/workout");
 app.use("/workouts", workoutsRouter);
 
 app.listen(PORT, () => {
