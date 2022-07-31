@@ -15,7 +15,7 @@ export default function EditWorkout() {
 
   // fetch for the workout that was clicked
   useEffect(() => {
-    fetch(`http://localhost5000/workouts/${workoutId}`)
+    fetch(`http://localhost5001/workouts/${workoutId}`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -27,7 +27,7 @@ export default function EditWorkout() {
 
   // fetch for users
   useEffect(() => {
-    fetch(`http://localhost:5000/users`)
+    fetch(`http://localhost:5001/users`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -37,7 +37,7 @@ export default function EditWorkout() {
 
   let handleSubmit = (e) => {
     e.preventDefault();
-    fetch("http://localhost:5000/workouts:" + workoutId, {
+    fetch("http://localhost:5001/workouts" + workoutId, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

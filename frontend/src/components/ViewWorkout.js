@@ -1,8 +1,19 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
+
 export default function ViewWorkout() {
+
+  const navigate = useNavigate();
+
+  const deleteWorkout = async (id) => {
+    await fetch(`http://localhost:5001/workouts/delete/${id}`,{
+      method:"DELETE"
+    });
+  };
+
   return (
     <>
     <div class="viewworkout">

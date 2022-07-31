@@ -25,53 +25,121 @@
 //   );
 // }
 
+// import React, { useContext, useState } from 'react';
+// import { useNavigate } from 'react-router-dom';
+// import { CurrentUser } from '../contexts/CurrentUser';
+
+// export default function Login() {
+
+//     const navigate = useNavigate();
+
+//     const { setCurrentUser }  = useContext(CurrentUser) || {};
+
+//     const [credentials, setCredentials] = useState({
+//         email: "",
+//         password: ""
+//     });
+
+//     const [errorMessage, setErrorMessage] = useState(null);
+
+//     async function handleSubmit(e) {
+//         e.preventDefault();
+//         const response = await fetch("http://localhost:5001/authentication/", {
+//             method: "POST",
+//             headers: { "Content-Type": "application/json" },
+//             body: JSON.stringify(credentials)
+//         });
+
+//         const data = await response.json();
+
+//         if (response.status === 200) {
+//             setCurrentUser(data.user);
+//             localStorage.setItem("token", data.token);
+//             navigate("/home");
+//         } else {
+//             setErrorMessage(data.message);
+//         };
+//     };
+
+//     return (
+//         <div>
+//             <h1>Login Page</h1>
+
+//             {errorMessage != null
+//                 ? (
+//                     <div>{errorMessage}</div>
+//                 )
+//                 :null
+//             };
+
+//             <div>
+//                 <form id="login" onSubmit={handleSubmit}>
+//                     <label htmlFor="email">Email</label>
+//                     <input
+//                         type="email"
+//                         value={credentials.email}
+//                         onChange={e => setCredentials({ ...credentials, email: e.target.value})}
+//                         id="email"
+//                         name="email"/><br></br>
+
+//                     <label htmlFor="htmlFor">Password</label>
+//                     <input
+//                         type="password"
+//                         value={credentials.password}
+//                         onChange={e => setCredentials({ ...credentials, password: e.target.value})}
+//                         id="password"
+//                         name="password"/><br></br>
+
+//                     <button type="submit">Submit</button>
+//                 </form>
+//                 <button onClick={() => navigate("/signup")}>Create account</button>
+//             </div>
+
+//         </div>
+//     );
+// };
+
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CurrentUser } from '../contexts/CurrentUser';
+import Button from 'react-bootstrap/Button'
 
 export default function Login() {
 
     const navigate = useNavigate();
 
     const { setCurrentUser }  = useContext(CurrentUser) || {};
-
     const [credentials, setCredentials] = useState({
         email: "",
         password: ""
     });
-
     const [errorMessage, setErrorMessage] = useState(null);
 
     async function handleSubmit(e) {
         e.preventDefault();
-        const response = await fetch("http://localhost:5000/authentication/", {
+        const response = await fetch("http://localhost:5001/authentication/", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(credentials)
         });
-
         const data = await response.json();
-
         if (response.status === 200) {
             setCurrentUser(data.user);
             localStorage.setItem("token", data.token);
-            navigate("/home");
+            navigate("/view");
         } else {
             setErrorMessage(data.message);
         };
     };
-
     return (
         <div>
             <h1>Login Page</h1>
-
             {errorMessage != null
                 ? (
                     <div>{errorMessage}</div>
                 )
                 :null
-            };
-
+            }
             <div>
                 <form id="login" onSubmit={handleSubmit}>
                     <label htmlFor="email">Email</label>
@@ -80,21 +148,20 @@ export default function Login() {
                         value={credentials.email}
                         onChange={e => setCredentials({ ...credentials, email: e.target.value})}
                         id="email"
-                        name="email"/><br></br>
-
+                        name="email"/>
+                    <br></br>
                     <label htmlFor="htmlFor">Password</label>
                     <input
                         type="password"
                         value={credentials.password}
                         onChange={e => setCredentials({ ...credentials, password: e.target.value})}
                         id="password"
-                        name="password"/><br></br>
-
-                    <button type="submit">Submit</button>
+                        name="password"/>
+                    <br></br>
+                    <Button variant="outline-primary" type="submit">Submit</Button>
                 </form>
-                <button onClick={() => navigate("/signup")}>Create account</button>
+                <Button variant="outline-primary" onClick={() => navigate("/signup")}>Create account</Button>
             </div>
-
         </div>
     );
 };
