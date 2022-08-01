@@ -11,7 +11,7 @@ export default function NavBar() {
       <Nav.Link href="/home">Home</Nav.Link>
     </Nav.Item>
     <Nav.Item>
-      <Nav.Link eventKey="link-1">Start</Nav.Link>
+      <Nav.Link href="/add">Add</Nav.Link>
     </Nav.Item>
     <Nav.Item>
       <Nav.Link eventKey="link-3">Sign out</Nav.Link>
