@@ -98,32 +98,36 @@ export default function Signup() {
                         value={user.firstName}
                         onChange={e => setUser({ ...user, firstName: e.target.value})}
                         id="firstName"
-                        name="firstName">
-                    </input><br></br>
+                        name="firstName"
+                    />
+                    <br></br>
                     <label htmlFor="lastName">Last Name</label>
                     <input
                         type="text"
                         value={user.lastName}
                         onChange={e => setUser({ ...user, lastName: e.target.value})}
                         id="lastName"
-                        name="lastName">
-                    </input><br></br>
+                        name="lastName"
+                    />
+                    <br></br>
                     <label htmlFor="email">Email</label>
                     <input
                         type="email"
                         value={user.email}
                         onChange={e => setUser({ ...user, email: e.target.value})}
                         id="email"
-                        name="email">
-                    </input><br></br>
+                        name="email"
+                    />
+                    <br></br>
                     <label htmlFor="password">Password</label>
                     <input
                         type="password"
                         value={user.password}
                         onChange={e => setUser({ ...user, password: e.target.value})}
                         id="password"
-                        name="password">
-                    </input><br></br>
+                        name="password"
+                    />
+                    <br></br>
                     <Button variant="outline-primary" type="submit">Submit</Button>
                 </form>
                 <Button variant="outline-primary" onClick={() => navigate("/")}>Back to login</Button>

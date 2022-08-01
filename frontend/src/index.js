@@ -7,10 +7,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import NavBar from "./components/NavBar";
 import Login from "./components/LogIn";
-import ViewWorkout from "./components/ViewWorkout";
-import AddWorkout from "./components/AddWorkout";
-import EditWorkout from "./components/EditWorkout";
-import DeleteWorkout from "./components/DeleteWorkout";
+import ViewWorkout from "./components/workout/ViewWorkout";
+import AddWorkout from "./components/workout/AddWorkout";
+import EditWorkout from "./components/workout/EditWorkout";
 import Signup from './components/Signup';
 import CurrentUserProvider from './contexts/CurrentUser';
 
@@ -25,7 +24,6 @@ root.render(
         <Route path="/view" element={<ViewWorkout/>}/>
         <Route path="/add" element={<AddWorkout/>}/>
         <Route path="/edit/:id" element={<EditWorkout/>}/>
-        <Route path="/delete" element={<DeleteWorkout/>}/>
       </Routes>
     </Router>
   </CurrentUserProvider>
