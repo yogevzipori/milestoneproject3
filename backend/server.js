@@ -1,53 +1,33 @@
 require("dotenv").config();
 const express = require("express");
-const app = express();
+
 const cors = require("cors");
+const app = express();
 const mongoose = require("mongoose");
-const cookieSession = require("cookie-session");
+
 const defineCurrentUser = require("./middleware/defineCurrentUser");
 
-app.use(cookieSession({
-    name: "session",
-    keys: [ process.env.SESSION_SECRET ],
-    sameSite: "strict",
-    maxAge: 24 * 60 * 60 * 1000
-}))
-
-const PORT = process.env.PORT;
-const MONGO_URI = process.env.MONGO_URI;
-mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true }, () => {
-    console.log("Connected to mongoDB at", MONGO_URI);
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true }, () => {
+    console.log("Connected to mongoDB at", process.env.MONGO_URI);
 });
 
 app.use(cors({
     origin: "http://localhost:3000",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true
-})); // prevent cors errors
-app.use(express.urlencoded({ extended: true })); // parse incoming requests
-app.use(express.json()); // parse incoming requests with JSON payloads
+}));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(defineCurrentUser)
 
-
 app.get("/", (req, res) => {
-    res.send("Index route");
+    res.status(200).json({ message: "Fit App server"})
 });
 
-// authentication controller
+app.use("/workouts", require("./controllers/workout.js"));
+app.use("/users", require("./controllers/user.js"));
 app.use("/authentication", require("./controllers/authentication"))
 
-// user controller
-app.use("/users", require("./controllers/user.js"));
-
-// workout controller
-app.use("/workouts", require("./controllers/workout.js"));
-
-// 404 error
-app.get("*", (req, res) => {
-    res.json("error404");
-});
-
-
-// 4. listen for connections
-app.listen(PORT, () => {
-    console.log("Listening at port", PORT);
+app.listen(process.env.PORT, () => {
+    console.log("Listening at port", process.env.PORT);
 });

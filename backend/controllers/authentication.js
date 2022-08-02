@@ -4,38 +4,25 @@ const bcrypt = require("bcrypt");
 const jwt = require("json-web-token")
 
 router.post("/", async (req, res) => {
-
-    let user = await User.findOne({
+    const user = await User.findOne({
         where: { email: req.body.email }
     });
 
-    if (!user == !await bcrypt.compare(req.body.password, user.passwordDigest)) {
-        res.status(404).json({ message: "Count not find a user with the provided username and password" });
+    if (!user || !await bcrypt.compare(req.body.password, user.password)) {
+        res.status(404).json({ message: "Could not find a user with the provided email and password" });
     } else {
-        const result = await jwt.encode(process.env.JWT_SECRET, { id: user._id })
+        const result = await jwt.encode(process.env.JWT_SECRET, { _id: user._id })
         res.json({ user: user, token: result.value });
     };
 });
 
-router.get("/profile", async (req, res) => {
-    try {
-        const [authenticationMethod, token] = req.headers.authorization.split(" ")
+router.post("/logout", (req, res) => {
+    req.currentUser = null
+    res.status(200).json()
+})
 
-        if (authenticationMethod === "Bearer") {
-            const result = await jwt.decode(process.env.JWT_SECRET, token)
-            
-            const { id } = result.value
-
-            let user = await User.findOne({
-                where: {
-                    _id: id
-                }
-            })
-            res.json({user})
-        }
-    } catch {
-        res.json(null)
-    }
+router.get('/profile', async (req, res) => {
+    res.json(req.currentUser)
 })
 
 module.exports = router;

@@ -6,7 +6,8 @@ const userSchema = new Schema({
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     email: { type: String, required: true },
-    passwordDigest: { type: String }
+    password: { type: String, required: true },
+    workouts: [{ type: Schema.Types.ObjectId, ref: "Workout" }]
 });
 
 const User = mongoose.model("User", userSchema);

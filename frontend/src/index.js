@@ -11,6 +11,7 @@ import ViewWorkout from "./components/workout/ViewWorkout";
 import AddWorkout from "./components/workout/AddWorkout";
 import EditWorkout from "./components/workout/EditWorkout";
 import Signup from './components/Signup';
+import Error from "../src/components/Error"
 import CurrentUserProvider from './contexts/CurrentUser';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -24,6 +25,7 @@ root.render(
         <Route path="/signup" element={<Signup/>}/>
         <Route path="/add" element={<AddWorkout/>}/>
         <Route path="/workouts/:id" element={<EditWorkout/>}/>
+        <Route path="*" element={<Error/>}/>
       </Routes>
     </Router>
   </CurrentUserProvider>
