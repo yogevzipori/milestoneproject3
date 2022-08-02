@@ -1,13 +1,19 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { CurrentUser } from '../../contexts/CurrentUser';
 import { useNavigate } from 'react-router-dom';
 
-export default function CreateWorkout() {
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 
+export default function CreateWorkout() {
   const navigate = useNavigate();
+
+  const { currentUser, setCurrentUser } = useContext(CurrentUser)
 
   const [workout, setWorkout] = useState({
     name: "",
-    description: ""
+    description: "",
+    createdBy: ""
   });
 
   async function handleSubmit(e) {
@@ -17,7 +23,8 @@ export default function CreateWorkout() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(workout)
     });
-    navigate("/view");
+    setWorkout({workout})
+    navigate("/");
 };
 
     return (
@@ -27,10 +34,10 @@ export default function CreateWorkout() {
 
             <div>
 
-                <form onSubmit={handleSubmit}>
+                <Form onSubmit={handleSubmit}>
 
-                    <label htmlFor="name">Name</label>
-                    <input
+                    <Form.Label htmlFor="name">Name</Form.Label>
+                    <Form.Control
                         type="text"
                         value={workout.name}
                         onChange={e => setWorkout({ ...workout, name: e.target.value})}
@@ -40,8 +47,8 @@ export default function CreateWorkout() {
 
                     <br></br>
 
-                    <label htmlFor="description">Description</label>
-                    <input
+                    <Form.Label htmlFor="description">Description</Form.Label>
+                    <Form.Control
                         type="text"
                         value={workout.description}
                         onChange={e => setWorkout({ ...workout, description: e.target.value})}
@@ -51,11 +58,13 @@ export default function CreateWorkout() {
 
                     <br></br>
 
-                    <button type="submit">Submit</button>
+                    <Button variant="outline-dark" type="submit">Submit</Button>
 
-                </form>
+                </Form>
 
-                <button onClick={() => navigate(-1)}>Back</button>
+                <br></br>
+
+                <Button variant="outline-dark" onClick={() => navigate("/")}>Back</Button>
 
             </div>
 
