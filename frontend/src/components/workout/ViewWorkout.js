@@ -45,7 +45,7 @@ export default function ReadWorkout() {
                                     <Card.Text>{workout.time} minutes</Card.Text>
                                 </Card.Body>
                                 <Card.Footer>
-                                    <Button variant="outline-dark" id="updateButton" onClick={ () => navigate(`/workouts/${workout._id}`) }>Update</Button>
+                                    <Button variant="dark" id="updateButton" onClick={ () => navigate(`/workouts/${workout._id}`) }>Update</Button>
                                     <Button variant="outline-danger" id="deleteButton" onClick={ () => { deleteWorkout(workout._id); window.location.reload(true) } }>Delete</Button>
                                 </Card.Footer>
                             </Card>
@@ -53,8 +53,10 @@ export default function ReadWorkout() {
                         </div>
                     )
                 })}
-                <Button variant="outline-dark" id="createButton" onClick={() => navigate("/add")}>Create Workout</Button>
+                <Button variant="dark" id="createButton" onClick={() => navigate("/add")}>Create Workout</Button>
             </div>
+            <br></br>
+            <p id="picRef">Photo by <a href="https://unsplash.com/@risennnnn?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Risen Wang</a> on <a href="https://unsplash.com/t/athletics?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></p>
         </div>
     );
 };

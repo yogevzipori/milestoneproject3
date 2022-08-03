@@ -4,6 +4,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import './index.css';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+import App from './App';
+
 import NavBar from "./components/NavBar";
 import Login from "./components/LogIn";
 import ViewWorkout from "./components/workout/ViewWorkout";
@@ -18,7 +20,7 @@ root.render(
   <div className="wrapper">
   <CurrentUserProvider>
     <Router>
-      <NavBar/>
+      <App/>
       <Routes>
         <Route path="/" element={<ViewWorkout/>}/>
         <Route path="/login" element={<Login/>}/>
@@ -27,6 +29,7 @@ root.render(
         <Route path="/workouts/:id" element={<EditWorkout/>}/>
         <Route path="*" element={<Error/>}/>
       </Routes>
+      <NavBar/>
     </Router>
   </CurrentUserProvider>
   </div>

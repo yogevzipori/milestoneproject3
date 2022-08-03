@@ -2,18 +2,45 @@
     font-family: sans-serif;
 }
 
-.content {
-    padding-top: 90px;
+h1 {
+    color: white;
 }
 
-@media (max-width: 425px) {
-    .wrapper {
+.logo {
+    position: fixed;
+    z-index: -1;
+    width: 2560px;
+    height: 1545px;
+    align-items: center;
+}
+
+form  {
+    padding: 5%;
+    
+}
+
+#picRef {
+    position: relative;
+}
+
+.content {
+    padding-top: 65px;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 10%;
+    margin-right: 20%;
+    margin-left: 20%;
+}
+
+@media (max-width: 351px) {
+    .content {
         font-size: 1rem;
         justify-content: center;
         align-items: center;
-        padding-bottom: 10%;
-        margin-right: 10%;
-        margin-left: 10%;
+        padding-top: 80px;
+        padding-bottom: 1%;
+        margin-right: 1%;
+        margin-left: 1%;
     }
 
 }

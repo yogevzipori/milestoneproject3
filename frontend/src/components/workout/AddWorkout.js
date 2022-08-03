@@ -98,11 +98,10 @@ export default function CreateWorkout() {
                             />
                         </Form.Group>
                         <br></br>          
-                        <Button variant="outline-dark" type="submit">Submit</Button>
+                        <Button variant="dark" type="submit">Submit</Button>
+                        <Button variant="dark" onClick={() => navigate("/")}>Back</Button>
                     </Form>
                 </Card>
-                <br></br>
-                <Button variant="outline-dark" onClick={() => navigate("/")}>Back</Button>
         </div>
     );
 };
