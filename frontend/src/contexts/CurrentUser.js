@@ -10,11 +10,16 @@ export default function CurrentUserProvider({ children }) {
         const getLoggedInUser = async () => {
             let response = await fetch("/authentication/profile", {
                 headers: {
-                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                    "Content-Type": "application/json"
                 }
             });
-            let user = await response.json();
-            setCurrentUser(user);
+            if (response.status === 200){
+                const user = await response.json()
+                setCurrentUser(user)    
+            } else {
+                setCurrentUser(null)
+            }
         }
         getLoggedInUser();
     }, []);

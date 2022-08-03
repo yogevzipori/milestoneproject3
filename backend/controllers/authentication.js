@@ -5,7 +5,7 @@ const jwt = require("json-web-token")
 
 router.post("/", async (req, res) => {
     const user = await User.findOne({
-        where: { email: req.body.email }
+          email: req.body.email 
     });
 
     if (!user || !await bcrypt.compare(req.body.password, user.password)) {
@@ -18,11 +18,15 @@ router.post("/", async (req, res) => {
 
 router.post("/logout", (req, res) => {
     req.currentUser = null
-    res.status(200).json()
+    res.status(200).json(req.currentUser)
 })
 
 router.get('/profile', async (req, res) => {
-    res.json(req.currentUser)
+    try {
+        res.json(req.currentUser)
+    } catch (err) {
+        res.send(err.message)
+    }
 })
 
 module.exports = router;

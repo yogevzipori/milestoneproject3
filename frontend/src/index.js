@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
 import "bootstrap/dist/css/bootstrap.min.css";
+import './index.css';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import NavBar from "./components/NavBar";
@@ -16,9 +15,10 @@ import CurrentUserProvider from './contexts/CurrentUser';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  <div className="wrapper">
   <CurrentUserProvider>
     <Router>
-    <NavBar/>
+      <NavBar/>
       <Routes>
         <Route path="/" element={<ViewWorkout/>}/>
         <Route path="/login" element={<Login/>}/>
@@ -29,4 +29,5 @@ root.render(
       </Routes>
     </Router>
   </CurrentUserProvider>
+  </div>
 );

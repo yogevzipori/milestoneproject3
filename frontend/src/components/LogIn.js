@@ -25,11 +25,9 @@ export default function Login() {
             },
             body: JSON.stringify(credentials)
         });
-
         const data = await response.json();
-
-        if (response.status === 200) {
-            console.log(data)
+        console.log(data)
+        if (data.token) {
             setCurrentUser(data.user);
             localStorage.setItem("token", data.token)
             navigate("/");
@@ -39,10 +37,8 @@ export default function Login() {
     };
 
     return (
-        <div>
-
+        <div className="content">
             <h1>Login Page</h1>
-
             {errorMessage != null
                 ? (
                     <div>{errorMessage}</div>

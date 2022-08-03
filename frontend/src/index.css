@@ -1,15 +1,19 @@
-/* .login
-{
-    width: 100px;
-    justify-content: center;
+* {
+    font-family: sans-serif;
 }
-.email
-{
-    width: 100px;
-    justify-content: center;
+
+.content {
+    padding-top: 90px;
 }
-.formPrincial
-{
-    width: 30vm !important;
-    justify-content: center !important;
-} */
+
+@media (max-width: 425px) {
+    .wrapper {
+        font-size: 1rem;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 10%;
+        margin-right: 10%;
+        margin-left: 10%;
+    }
+
+}

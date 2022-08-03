@@ -18,7 +18,6 @@ export default function Signup() {
         const response = await fetch("/users/", {
             method: "POST",
             headers: {
-                "Authorization": `Bearer ${localStorage.getItem("token")}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
@@ -43,8 +42,7 @@ export default function Signup() {
     };
 
     return (
-        <div>
-
+        <div className="content">
             <h1>Sign up Page</h1>
 
             {errorMessage != null

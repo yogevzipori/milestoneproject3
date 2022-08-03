@@ -5,9 +5,9 @@ import Container from "react-bootstrap/Container"
 import Nav from "react-bootstrap/Nav"
 import Navbar from "react-bootstrap/Navbar"
 
-export default function NavBar(props) {
+export default function NavBar() {
 
-    const { currentUser, setCurrentUser } = useContext(CurrentUser)
+    const { curentUser, setCurrentUser } = useContext(CurrentUser)
 
     const [ loggedOut, setLoggedOut ] = useState(false)
 
@@ -15,7 +15,6 @@ export default function NavBar(props) {
         await fetch("/authentication/logout", {
             method: "POST",
             headers: {
-                "Authorization": `Bearer ${localStorage.getItem("token")}`,
                 "Content-Type": "application/json"
             }
         })
@@ -25,31 +24,29 @@ export default function NavBar(props) {
     }
 
     return (
-        <div>
-            <div id="navbar">
-                <Navbar bg="dark" variant="dark">
-                    <Container>
-                        <Nav>
-                            <Nav.Item>
-                                <Nav.Link href="/">Home</Nav.Link>    
-                            </Nav.Item>
-                            <Nav.Item>
-                                <Nav.Link href="/add">Create</Nav.Link>    
-                            </Nav.Item>
-                            <Nav.Item>
-                                <Nav.Link href="/login">Login</Nav.Link>    
-                            </Nav.Item>
-                            <Nav.Item>
-                                <Nav.Link onClick={() => {
-                                    setLoggedOut(true)
-                                    logOut()
-                                    window.location.reload(true)
-                                    }}>Log out</Nav.Link>    
-                            </Nav.Item>
-                        </Nav>
-                    </Container>
-                </Navbar>
-            </div>
-        </div>
+        <Navbar bg="dark" variant="dark" fixed="top">
+            <Container>
+                <Navbar.Brand href="/">Fit-App</Navbar.Brand>
+                <Nav>
+                    <Nav.Item>
+                        <Nav.Link href="/">Home</Nav.Link>    
+                    </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link href="/add">Create</Nav.Link>    
+                    </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link href="/login">Login</Nav.Link>    
+                    </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link onClick={() => {
+                            setLoggedOut(true)
+                            logOut()
+                            window.location.reload(true)
+                            }}>Log out
+                        </Nav.Link>    
+                        </Nav.Item>
+                    </Nav>
+                </Container>
+        </Navbar>
     );
 };
