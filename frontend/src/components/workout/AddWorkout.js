@@ -22,7 +22,6 @@ export default function CreateWorkout() {
         await fetch("/workouts/", {
             method: "POST",
             headers: {
-                // "Authorization": `Bearer ${localStorage.getItem("token")}`,
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(workout)

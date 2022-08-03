@@ -25,7 +25,7 @@ router.get('/profile', async (req, res) => {
     try {
         res.json(req.currentUser)
     } catch (err) {
-        console.log(err)
+        res.send(err.message)
     }
 })
 

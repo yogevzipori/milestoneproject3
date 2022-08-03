@@ -9,7 +9,7 @@ export default function NavBar() {
 
     const { curentUser, setCurrentUser } = useContext(CurrentUser)
 
-    const [ loggedOut, setLoggedOut ] = useState(false)
+    const [ loggedOut, setLoggedOut ] = useState(true)
 
     const logOut = async () => {
         await fetch("/authentication/logout", {
@@ -26,7 +26,7 @@ export default function NavBar() {
     return (
         <Navbar bg="dark" variant="dark" fixed="top">
             <Container>
-                <Navbar.Brand href="/">Fit-App</Navbar.Brand>
+                <Navbar.Brand>Fit-App</Navbar.Brand>
                 <Nav>
                     <Nav.Item>
                         <Nav.Link href="/">Home</Nav.Link>    
@@ -44,9 +44,9 @@ export default function NavBar() {
                             window.location.reload(true)
                             }}>Log out
                         </Nav.Link>    
-                        </Nav.Item>
-                    </Nav>
-                </Container>
+                    </Nav.Item>
+                </Nav>
+            </Container>
         </Navbar>
     );
 };
