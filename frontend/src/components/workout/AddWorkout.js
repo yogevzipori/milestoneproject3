@@ -18,7 +18,7 @@ export default function CreateWorkout() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    await fetch("http://localhost:5001/workouts/", {
+    await fetch("/workouts/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(workout)

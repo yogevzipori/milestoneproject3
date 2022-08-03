@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
+const jwt = require("json-web-token")
 
 // CREATE User
 router.post('/', async (req, res) => {

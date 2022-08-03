@@ -12,7 +12,7 @@ export default function NavBar(props) {
     const [ loggedOut, setLoggedOut ] = useState(false)
 
     const logOut = async () => {
-        await fetch("http://localhost:3001/authentication/logout", {
+        await fetch("/authentication/logout", {
             method: "POST",
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`,

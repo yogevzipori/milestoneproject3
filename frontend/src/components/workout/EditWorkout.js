@@ -16,7 +16,7 @@ export default function UpdateWorkout() {
     });
 
     useEffect(() => {
-        fetch(`http://localhost:5001/workouts/${id}`)
+        fetch(`/workouts/${id}`)
             .then((res) => res.json())
             .then((data) => {
                 setFoundWorkout(data)
@@ -29,7 +29,7 @@ export default function UpdateWorkout() {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        let res = await fetch(`http://localhost:5001/workouts/${id}`, {
+        let res = await fetch(`/workouts/${id}`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(workout)

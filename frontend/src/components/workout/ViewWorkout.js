@@ -15,7 +15,7 @@ export default function ReadWorkout() {
     useEffect(() => {
         const fetchWorkouts = async () => {
             try {
-                const data = await fetch("http://localhost:5001/workouts");
+                const data = await fetch("/workouts");
                 const json = await data.json();
                 setWorkouts(json);
             } catch (err) {
@@ -26,7 +26,7 @@ export default function ReadWorkout() {
     }, []);
 
     const deleteWorkout = async (id) => {
-        await fetch(`http://localhost:5001/workouts/${id}`, {
+        await fetch(`/workouts/${id}`, {
             method: "DELETE"
         });
     };

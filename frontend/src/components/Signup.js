@@ -15,7 +15,7 @@ export default function Signup() {
     
     async function handleSubmit(e) {
         e.preventDefault();
-        const response = await fetch("http://localhost:5001/users/", {
+        const response = await fetch("/users/", {
             method: "POST",
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`,
