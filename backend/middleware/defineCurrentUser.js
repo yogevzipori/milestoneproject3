@@ -3,7 +3,6 @@ const jwt = require("json-web-token");
 
 async function defineCurrentUser(req, res, next) {
     try {
-        console.log("defineCurrentUser ran")
         if (req.headers.authorization) {
             console.log(req.headers.authorization)
             const [ method, token ] = req.headers.authorization.split(' ')
@@ -14,7 +13,6 @@ async function defineCurrentUser(req, res, next) {
                     req.currentUser = user
                 }
             }
-            console.log("req.currentUser", req.currentUser)
         next()
     } catch (err) {
         res.send(err)

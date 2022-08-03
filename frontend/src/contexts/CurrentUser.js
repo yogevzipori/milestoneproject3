@@ -14,12 +14,8 @@ export default function CurrentUserProvider({ children }) {
                     "Content-Type": "application/json"
                 }
             });
-            if (response.status === 200){
-                const user = await response.json()
-                setCurrentUser(user)    
-            } else {
-                setCurrentUser(null)
-            }
+            const user = await response.json()
+            setCurrentUser(user)    
         }
         getLoggedInUser();
     }, []);
