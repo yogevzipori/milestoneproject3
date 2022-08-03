@@ -13,9 +13,9 @@ router.post("/", async (req, res) => {
     });
     try {
         const newWorkout = await (await workout.save()).populate("createdBy")
-        res.status(201).json(newWorkout)
+        res.json(newWorkout)
     } catch (err) {
-        res.status(400).json({ message: err.message });
+        res.json({ message: err.message });
     };
 });
 
@@ -25,7 +25,7 @@ router.get("/", async (req, res) => {
         const workouts = await Workout.find()
         res.json(workouts);
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        res.json({ message: err.message });
     };
 });
 
@@ -55,7 +55,7 @@ router.patch("/:id", getWorkout, async (req, res) => {
         const updatedWorkout = await res.workout.save();
         res.json(updatedWorkout);
     } catch (err) {
-        res.status(400).json({ message: err.message});
+        res.json({ message: err.message});
     };
 });
 
@@ -65,7 +65,7 @@ router.delete("/:id", getWorkout, async (req, res) => {
         await res.workout.remove();
         res.json({ message: "Deleted workout"});
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        res.json({ message: err.message });
     };
 });
 
@@ -78,7 +78,7 @@ async function getWorkout(req, res, next) {
             return res.status(404).json({ message: "Cannot find workout" });
         };
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        res.json({ message: err.message });
     };
     res.workout = workout;
     next();
