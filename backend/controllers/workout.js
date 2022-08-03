@@ -5,10 +5,10 @@ const Workout = require("../models/workout");
 router.post("/", async (req, res) => {
     const workout = new Workout({
         name: req.body.name,
-        description: req.body.description,
+        description: req.body.description
     });
     try {
-        const newWorkout = await workout.save();
+        const newWorkout = await (await workout.save()).populate("createdBy")
         res.status(201).json(newWorkout);
     } catch (err) {
         res.status(400).json({ message: err.message });
@@ -18,7 +18,7 @@ router.post("/", async (req, res) => {
 // READ all workouts
 router.get("/", async (req, res) => {
     try {
-        const workouts = await Workout.find();
+        const workouts = await Workout.find()
         res.json(workouts);
     } catch (err) {
         res.status(500).json({ message: err.message });
@@ -55,6 +55,28 @@ router.delete("/:id", getWorkout, async (req, res) => {
         res.status(500).json({ message: err.message });
     };
 });
+
+router.delete('/:placeId', async (req, res) => {
+    if(req.currentUser?.role !== 'admin'){
+        return res.status(403).json({ message: 'You are not allowed to delete places'})
+    }
+    let placeId = Number(req.params.placeId)
+    if (isNaN(placeId)) {
+        res.status(404).json({ message: `Invalid id "${placeId}"` })
+    } else {
+        const place = await Place.findOne({
+            where: {
+                placeId: placeId
+            }
+        })
+        if (!place) {
+            res.status(404).json({ message: `Could not find place with id "${placeId}"` })
+        } else {
+            await place.destroy()
+            res.json(place)
+        }
+    }
+})
 
 // MIDDLEWARE
 async function getWorkout(req, res, next) {
