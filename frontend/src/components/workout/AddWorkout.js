@@ -58,6 +58,7 @@ export default function CreateWorkout() {
                                 id="type"
                                 name="type"
                             >
+                                <option></option>
                                 <option value="Upper body">Upper Body</option>
                                 <option value="Lower body">Lower Body</option>
                                 <option value="Full body">Full Body</option>

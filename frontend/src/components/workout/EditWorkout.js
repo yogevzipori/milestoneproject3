@@ -41,6 +41,7 @@ export default function UpdateWorkout() {
         fetch(`/workouts/${id}`, {
             method: "PATCH",
             headers: {
+                "Authorization": `Bearer ${localStorage.getItem("token")}`,
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(workout)

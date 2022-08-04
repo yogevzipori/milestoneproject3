@@ -24,6 +24,9 @@ export default function ReadWorkout() {
 
     const deleteWorkout = async (id) => {
         await fetch(`/workouts/${id}`, {
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("token")}`,
+            },
             method: "DELETE"
         });
     };

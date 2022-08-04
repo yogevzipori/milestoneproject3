@@ -36,37 +36,51 @@ router.get("/:id", getWorkout, (req, res) => {
 
 // UPDATE workout
 router.patch("/:id", getWorkout, async (req, res) => {
-    if (req.body.name != null) {
-        res.workout.name = req.body.name;
-    };
-    if (req.body.sets != null) {
-        res.workout.sets = req.body.sets;
-    };
-    if (req.body.reps != null) {
-        res.workout.reps = req.body.reps;
-    };
-    if (req.body.time != null) {
-        res.workout.time = req.body.time;
-    };
-    if (req.body.type != null) {
-        res.workout.type = req.body.type;
-    };
-    try {
-        const updatedWorkout = await res.workout.save();
-        res.json(updatedWorkout);
-    } catch (err) {
-        res.status(400).json({ message: err.message});
-    };
+    console.log("workout creator", res.workout.createdBy, "Current user", req.currentUser._id)
+    const workoutId = (res.workout.createdBy).toString()
+    const currentUserId = (req.currentUser._id).toString()
+    if (workoutId !== currentUserId) {
+        return console.log("Current user does not match workout creator")
+    } else {
+        if (req.body.name != null) {
+            res.workout.name = req.body.name;
+        };
+        if (req.body.sets != null) {
+            res.workout.sets = req.body.sets;
+        };
+        if (req.body.reps != null) {
+            res.workout.reps = req.body.reps;
+        };
+        if (req.body.time != null) {
+            res.workout.time = req.body.time;
+        };
+        if (req.body.type != null) {
+            res.workout.type = req.body.type;
+        };
+        try {
+            const updatedWorkout = await res.workout.save();
+            res.json(updatedWorkout);
+        } catch (err) {
+            res.status(400).json({ message: err.message});
+        };
+    }
 });
 
 // DELETE workout
 router.delete("/:id", getWorkout, async (req, res) => {
-    try {
-        await res.workout.remove();
-        res.json({ message: "Deleted workout"});
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    };
+    console.log("workout creator", res.workout.createdBy, "Current user", req.currentUser._id)
+    const workoutId = (res.workout.createdBy).toString()
+    const currentUserId = (req.currentUser._id).toString()
+    if (workoutId !== currentUserId) {
+        return console.log("Current user does not match workout creator")
+    } else {
+        try {
+            await res.workout.remove();
+            res.json({ message: "Deleted workout"});
+        } catch (err) {
+            res.status(500).json({ message: err.message });
+        };
+    }
 });
 
 // MIDDLEWARE
