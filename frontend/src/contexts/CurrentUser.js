@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 
 export const CurrentUser = createContext();
 
+
 export default function CurrentUserProvider({ children }) {
 
     const [currentUser, setCurrentUser] = useState(null);
@@ -11,15 +12,17 @@ export default function CurrentUserProvider({ children }) {
             let response = await fetch("/authentication/profile", {
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("token")}`,
-                    "Content-Type": "application/json"
+                    // "Content-Type": "application/json"
                 }
             });
-            if (response.status === 200){
+                console.log("response", response)
+            // if (response.status === 200){
                 const user = await response.json()
+                console.log("user", user)
                 setCurrentUser(user)    
-            } else {
-                setCurrentUser(null)
-            }
+            // } else {
+            //     setCurrentUser(null)
+            // }
         }
         getLoggedInUser();
     }, []);
