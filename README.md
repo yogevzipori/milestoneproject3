@@ -18,3 +18,6 @@
 - Removed log out button because it was causing state errors.
 - Created workouts are not added to the users that created them.
 - Wanted to add search functionality that filtered through workout names/tags.
+
+## Credit
+- Background photo by Risen Wang on Unsplash [Link](https://unsplash.com/@risennnnn?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)
