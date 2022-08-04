@@ -12,7 +12,7 @@ router.post("/", async (req, res) => {
         createdBy: req.currentUser
     });
     try {
-        const newWorkout = await (await workout.save()).populate("createdBy")
+        const newWorkout = await (await workout.save()).populate("createdBy", function(err){console.log(workout.createdBy)})
         res.status(201).json(newWorkout)
     } catch (err) {
         res.status(400).json({ message: err.message });

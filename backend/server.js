@@ -13,9 +13,9 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
 });
 
 app.use(cors({
-    origin: "http://localhost:3000",
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    credentials: true
+    // origin: "http://localhost:3000",
+    // methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    // credentials: true
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

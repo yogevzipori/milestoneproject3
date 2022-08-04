@@ -27,7 +27,7 @@ export default function Login() {
             body: JSON.stringify(credentials)
         });
         const data = await response.json();
-        console.log(data)
+        // console.log(data)
         if (data.token) {
             setCurrentUser(data.user);
             localStorage.setItem("token", data.token)
@@ -36,6 +36,26 @@ export default function Login() {
             setErrorMessage(data.message);
         };
     };
+
+        // async function handleSubmit(e) {
+        //     e.preventDefault();
+        //     const response = await fetch("/users/", {
+        //         method: "POST",
+        //         // headers: {
+        //         //     'Content-Type': 'application/json'
+        //         // },
+        //         body: JSON.stringify(credentials)
+        //     });
+        //     const data = await response.json();
+        //     console.log(data)
+        //     if (data.token) {
+        //         setCurrentUser(data.user);
+        //         localStorage.setItem("token", data.token)
+        //         navigate("/");
+        //     } else {
+        //         setErrorMessage(data.message);
+        //     };
+        // };
 
     return (
         <div className="content">

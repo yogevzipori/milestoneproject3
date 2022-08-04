@@ -22,10 +22,13 @@ router.post("/logout", (req, res) => {
 })
 
 router.get('/profile', async (req, res) => {
+    // res.setHeader('Authorization', 'Bearer')
     try {
-        res.json(req.currentUser)
+            // console.log("req.currentUser", req.currentUser)
+        // res.json(req.currentUser)
     } catch (err) {
-        res.send(err.message)
+            console.log(err)
+        // res.send(err.message)
     }
 })
 
