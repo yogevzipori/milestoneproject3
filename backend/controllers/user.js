@@ -1,12 +1,13 @@
 const router = require("express").Router();
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
+const jwt = require("json-web-token")
 
 // CREATE User
 router.post('/', async (req, res) => {
-    const user = await User.findOne({
-        where: { email: req.body.email }
-    })
+    const user = await User.findOne(
+        { email: req.body.email }
+    )
     if(!user){
         let { password, ...rest } = req.body;
         const user = await User.create({

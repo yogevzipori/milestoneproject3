@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form"
+import Card from "react-bootstrap/Card";
 
 export default function UpdateWorkout() {
     const navigate = useNavigate();
@@ -10,78 +11,117 @@ export default function UpdateWorkout() {
     const { id } = useParams();
 
     const [foundWorkout, setFoundWorkout] = useState(null);
-    const [workout, setWorkout] = useState({
+    const [ workout, setWorkout ] = useState({
         name: "",
-        description: ""
+        sets: "",
+        reps: "",
+        time: "",
+        type: "",
+        createdBy: ""
     });
 
     useEffect(() => {
-        fetch(`http://localhost:5001/workouts/${id}`)
+        fetch(`/workouts/${id}`)
             .then((res) => res.json())
             .then((data) => {
                 setFoundWorkout(data)
                 setWorkout({
                     name: data.name,
-                    description: data.description
+                    sets: data.sets,
+                    reps: data.reps,
+                    time: data.time,
+                    type: data.type,
+                    createdBy: data.createdBy
                 });
             });
     }, []);
 
     async function handleSubmit(e) {
         e.preventDefault();
-        let res = await fetch(`http://localhost:5001/workouts/${id}`, {
+        fetch(`/workouts/${id}`, {
             method: "PATCH",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                "Content-Type": "application/json"
+            },
             body: JSON.stringify(workout)
         });
-        navigate("/");
     };
 
     if (foundWorkout === null) {
-        return <p>Loading...</p>
+        return <p>Fetching exercise...</p>
     };
 
     return (
-        <div>
-
-            <h1>Update Workout Component</h1>
-
-            <div>
-
+        <div className="content">
+            <h1>Update Exercise</h1>
+            <Card>
                 <Form onSubmit={handleSubmit}>
-
-                    <Form.Label htmlFor="name">Name</Form.Label>
-                    <Form.Control
-                        type="text"
-                        defaultValue={workout.name}
-                        onChange={e => setWorkout({ ...workout, name: e.target.value })}
-                        id="name"
-                        name="name"
-                    />
-
+                    <Form.Group>
+                        <Form.Label htmlFor="name">Name</Form.Label>
+                        <Form.Control
+                            type="text"
+                            defaultValue={workout.name}
+                            onChange={e => setWorkout({ ...workout, name: e.target.value })}
+                            id="name"
+                            name="name"
+                        />
+                    </Form.Group>
                     <br></br>
-
-                    <Form.Label htmlFor="description">Description</Form.Label>
-                    <Form.Control
-                        type="text"
-                        defaultValue={workout.description}
-                        onChange={e => setWorkout({ ...workout, description: e.target.value })}
-                        id="description"
-                        name="description"
-                    />
-
+                    <Form.Group>
+                        <Form.Label htmlFor="type">Type of workout</Form.Label>
+                        <Form.Select
+                            type="text"
+                            defaultValue={workout.type}
+                            onChange={e => setWorkout({ ...workout, type: e.target.value })}
+                            id="type"
+                            name="type"
+                        >
+                            <option value="Upper body">Upper Body</option>
+                            <option value="Lower body">Lower Body</option>
+                            <option value="Full body">Full Body</option>
+                        </Form.Select>
+                    </Form.Group>
                     <br></br>
-
-                    <Button variant="outline-dark" type="submit">Submit</Button>
-
+                    <Form.Group>
+                        <Form.Label htmlFor="sets">Number of sets</Form.Label>
+                        <Form.Control
+                            type="number"
+                            min={1}
+                            defaultValue={workout.sets}
+                            onChange={e => setWorkout({ ...workout, sets: e.target.value })}
+                            id="sets"
+                            name="sets"
+                        />
+                    </Form.Group>
+                    <br></br>             
+                    <Form.Group>
+                        <Form.Label htmlFor="reps">Number of reps</Form.Label>
+                        <Form.Control
+                            type="number"
+                            min={1}
+                            defaultValue={workout.reps}
+                            onChange={e => setWorkout({ ...workout, reps: e.target.value })}
+                            id="reps"
+                            name="reps"
+                        />
+                    </Form.Group>
+                    <br></br>
+                    <Form.Group>
+                        <Form.Label htmlFor="time">Time (in minutes)</Form.Label>
+                        <Form.Control
+                            type="number"
+                            min={1}
+                            defaultValue={workout.time}
+                            onChange={e => setWorkout({ ...workout, time: e.target.value })}
+                            id="time"
+                            name="time"
+                        />
+                        </Form.Group>                        <br></br>                               
+                    <Button variant="dark" type="submit">Update</Button>
+                    <Button variant="dark" onClick={() => navigate("/")}>Back</Button>
                 </Form>
-
-                <br></br>
-
-                <Button variant="outline-dark" onClick={() => navigate(-1)}>Back</Button>
-
-            </div>
-
+            </Card>
         </div>
     );
 };

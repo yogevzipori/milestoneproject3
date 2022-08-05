@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import Card from "react-bootstrap/Card"
 
 export default function Signup() {
     const navigate = useNavigate();
@@ -15,10 +16,9 @@ export default function Signup() {
     
     async function handleSubmit(e) {
         e.preventDefault();
-        const response = await fetch("http://localhost:5001/users/", {
+        const response = await fetch("/users/", {
             method: "POST",
             headers: {
-                "Authorization": `Bearer ${localStorage.getItem("token")}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
@@ -43,8 +43,7 @@ export default function Signup() {
     };
 
     return (
-        <div>
-
+        <div className="content">
             <h1>Sign up Page</h1>
 
             {errorMessage != null
@@ -53,59 +52,56 @@ export default function Signup() {
                 )
                 :null
             }
-
-            <div id="signup">
-
-                <Form id="signupForm" onSubmit={handleSubmit}>
-
-                    <Form.Label htmlFor="firstName">First Name</Form.Label>
-                    <Form.Control
-                        type="text"
-                        value={firstName}
-                        onChange={e => setFirstName(e.target.value)}
-                        id="firstName"
-                        name="firstName"
-                    />
-
-                    <Form.Label htmlFor="lastName">Last Name</Form.Label>
-                    <Form.Control
-                        type="text"
-                        value={lastName}
-                        onChange={e => setLastName(e.target.value)}
-                        id="lastName"
-                        name="lastName"
-                    />
-
-                    <Form.Label htmlFor="email">Email</Form.Label>
-                    <Form.Control
-                        type="email"
-                        value={email}
-                        onChange={e => setEmail(e.target.value)}
-                        id="email"
-                        name="email"
-                    />
-
-                    <Form.Label htmlFor="password">Password</Form.Label>
-                    <Form.Control
-                        type="password"
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                        id="password"
-                        name="password"
-                    />
-
-                    <br></br>
-
-                    <Button variant="outline-dark" type="submit">Submit</Button>
-
-                </Form>
-
-                <br></br>
-
-                <Button variant="outline-dark" onClick={() => navigate("/login")}>Back to login</Button>
-
-            </div>
-
+                <Card>
+                    <Form id="signupForm" onSubmit={handleSubmit}>
+                        <Form.Group>
+                            <Form.Label htmlFor="firstName">First Name</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={firstName}
+                                onChange={e => setFirstName(e.target.value)}
+                                id="firstName"
+                                name="firstName"
+                            />
+                        </Form.Group>
+                        <br></br>
+                        <Form.Group>
+                            <Form.Label htmlFor="lastName">Last Name</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={lastName}
+                                onChange={e => setLastName(e.target.value)}
+                                id="lastName"
+                                name="lastName"
+                            />
+                        </Form.Group>
+                        <br></br>
+                        <Form.Group>
+                            <Form.Label htmlFor="email">Email</Form.Label>
+                                <Form.Control
+                                type="email"
+                                value={email}
+                                onChange={e => setEmail(e.target.value)}
+                                id="email"
+                                name="email"
+                            />
+                        </Form.Group>
+                        <br></br>
+                        <Form.Group>
+                            <Form.Label htmlFor="password">Password</Form.Label>
+                            <Form.Control
+                                type="password"
+                                value={password}
+                                onChange={e => setPassword(e.target.value)}
+                                id="password"
+                                name="password"
+                            />
+                        </Form.Group>
+                        <br></br>
+                        <Button variant="dark" type="submit">Submit</Button>
+                        <Button variant="dark" onClick={() => navigate("/login")}>Back to login</Button>
+                    </Form>
+                </Card>
         </div>
     );
 };

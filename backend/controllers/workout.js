@@ -1,15 +1,29 @@
 const router = require("express").Router();
 const Workout = require("../models/workout");
+const User = require("../models/user");
+const { update } = require("../models/workout");
 
 // CREATE workout
 router.post("/", async (req, res) => {
+    if (!req.currentUser) {
+        return console.log("You must be logged in to create a workout.")
+    }
     const workout = new Workout({
         name: req.body.name,
-        description: req.body.description
+        sets: req.body.sets,
+        reps: req.body.reps,
+        time: req.body.time,
+        type: req.body.type,
+        createdBy: req.currentUser
     });
+    const user = await User.findOne({_id: req.currentUser})
+    if (req.currentUser != null) {
+        user.workouts.push(workout)
+    }
     try {
         const newWorkout = await (await workout.save()).populate("createdBy")
-        res.status(201).json(newWorkout);
+        await user.save()
+        res.status(201).json(newWorkout)
     } catch (err) {
         res.status(400).json({ message: err.message });
     };
@@ -32,51 +46,61 @@ router.get("/:id", getWorkout, (req, res) => {
 
 // UPDATE workout
 router.patch("/:id", getWorkout, async (req, res) => {
-    if (req.body.name != null) {
-        res.workout.name = req.body.name;
-    };
-    if (req.body.description != null) {
-        res.workout.description = req.body.description;
-    };
-    try {
-        const updatedWorkout = await res.workout.save();
-        res.json(updatedWorkout);
-    } catch (err) {
-        res.status(400).json({ message: err.message});
-    };
+    if (!req.currentUser) {
+        return console.log("You must be logged in to update a workout.")
+    }
+    const workoutId = (res.workout.createdBy).toString()
+    const currentUserId = (req.currentUser._id).toString()
+    if (workoutId !== currentUserId) {
+        return console.log("Current user does not match workout creator")
+    } else {
+        if (req.body.name != null) {
+            res.workout.name = req.body.name;
+        };
+        if (req.body.sets != null) {
+            res.workout.sets = req.body.sets;
+        };
+        if (req.body.reps != null) {
+            res.workout.reps = req.body.reps;
+        };
+        if (req.body.time != null) {
+            res.workout.time = req.body.time;
+        };
+        if (req.body.type != null) {
+            res.workout.type = req.body.type;
+        };
+        try {
+            const updatedWorkout = await res.workout.save();
+            res.json(updatedWorkout);
+        } catch (err) {
+            res.status(400).json({ message: err.message});
+        };
+    }
 });
 
 // DELETE workout
 router.delete("/:id", getWorkout, async (req, res) => {
-    try {
-        await res.workout.remove();
-        res.json({ message: "Deleted workout"});
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    };
-});
-
-router.delete('/:placeId', async (req, res) => {
-    if(req.currentUser?.role !== 'admin'){
-        return res.status(403).json({ message: 'You are not allowed to delete places'})
+    if (!req.currentUser) {
+        return console.log("You must be logged in to delete a workout.")
     }
-    let placeId = Number(req.params.placeId)
-    if (isNaN(placeId)) {
-        res.status(404).json({ message: `Invalid id "${placeId}"` })
+    const workoutId = (res.workout.createdBy).toString()
+    const currentUserId = (req.currentUser._id).toString()
+    if (workoutId !== currentUserId) {
+        return console.log("Current user does not match workout creator")
     } else {
-        const place = await Place.findOne({
-            where: {
-                placeId: placeId
-            }
-        })
-        if (!place) {
-            res.status(404).json({ message: `Could not find place with id "${placeId}"` })
-        } else {
-            await place.destroy()
-            res.json(place)
+        const user = await User.findOne({_id: res.workout.createdBy})
+        if (req.currentUser != null) {
+            user.workouts.remove(res.workout)
         }
+        try {
+            await res.workout.remove();
+            await (await user.save()).populate("workouts")
+            res.json({ message: "Deleted workout"});
+        } catch (err) {
+            res.status(500).json({ message: err.message });
+        };
     }
-})
+});
 
 // MIDDLEWARE
 async function getWorkout(req, res, next) {
