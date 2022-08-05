@@ -21,6 +21,8 @@ form  {
 
 #picRef {
     color: white;
+    background-color: black;
+    width: 248px;
 }
 
 .content {

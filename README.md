@@ -14,7 +14,6 @@
 - Authentication / Authorization: json-web-token
 
 ## Outstanding bugs / unfinished functionality
-- Deployed app does not work, runs into proxy request errors.
 - Removed log out button because it was causing state errors.
 - Wanted to add search functionality that filtered through workout names/tags.
 
